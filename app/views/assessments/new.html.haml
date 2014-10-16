@@ -1,0 +1,9 @@
+%h2 Select a deck to begin an assessment
+= form_tag '/assessments' do
+  %div
+    = select_tag 'deck', options_for_select(@decks)
+
+  %br
+  %div
+    = submit_tag 'start assessment'
+

@@ -1,0 +1,26 @@
+-# jQuery has been added for posting answers only and is not required
+%script(src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js")
+
+- @slides.each do |slide|
+  %h1= slide.caption
+  %div
+    %img(src="#{slide.image_desktop}")
+  %div
+    %a.slides(href="/assessments/#{@assessment_id}" data-slide="#{slide.id}" data-answer="true") Me
+    %a.slides(href="/assessments/#{@assessment_id}" data-slide="#{slide.id}" data-answer="false") Not Me
+
+%a(href="/assessments/#{@assessment_id}") Done!
+
+-# This script only binds to the answer links to post selections to server
+:javascript
+  $(document).ready(function(){
+    $('.slides').click(function(e) {
+      e.preventDefault();
+      $.ajax({
+        type: "PUT",
+        url: this.href,
+        data: this.dataset
+      });
+      return false;
+    });
+  })
